@@ -13,9 +13,8 @@ module JSONResponse
     counters[name] += 1
   end
 
-  class JSONStruct < OpenStruct
+  class JSONStruct
     def initialize(&block)
-      super
       @block = block
     end
 
@@ -24,7 +23,7 @@ module JSONResponse
     end
 
     def build
-      self.tap { |s| @block.call(s) }.marshal_dump
+      OpenStruct.new.tap { |o| @block.call(o) }.marshal_dump
     end
   end
 
